@@ -24,10 +24,10 @@
          point="org.eclipse.core.runtime.products">
       <product
             application="org.vtc.application"
-            name="%product.name">
+            name="VisualToolComposer">
          <property
-               name="windowImages"
-               value="icons/alt_window_16.gif,icons/alt_window_32.gif">
+               name="appName"
+               value="VisualToolComposer">
          </property>
       </product>
    </extension>
@@ -35,28 +35,82 @@
          point="org.eclipse.ui.views">
       <view
             class="org.vtc.perspective.view.ComponentExplorer"
+            icon="icons/gear_in.png"
             id="org.vtc.perspective.view.ComponentExplorer"
             name="%view.name.componentExplorer"
             restorable="true">
       </view>
       <view
             class="org.vtc.perspective.view.Console"
+            icon="icons/monitor.png"
             id="org.vtc.perspective.view.Console"
             name="%view.name.console"
             restorable="true">
       </view>
       <view
             class="org.vtc.perspective.view.ProjectExplorer"
+            icon="icons/folders_explorer.png"
             id="org.vtc.perspective.view.ProjectExplorer"
             name="%view.name.projectExplorer"
             restorable="true">
       </view>
       <view
             class="org.vtc.perspective.view.PropertyEditor"
+            icon="icons/table_edit.png"
             id="org.vtc.perspective.view.PropertyEditor"
             name="%view.name.propertyEditor"
             restorable="true">
       </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="org.vtc.ui.commands.exit"
+            name="%org.vtc.ui.commands.exit">
+      </command>
+      <command
+            id="org.vtc.ui.toolbar.save"
+            name="%org.vtc.ui.toolbar.save">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:org.eclipse.ui.main.menu">
+         <menu
+               id="org.vtc.ui.commands.fileMenu"
+               label="%org.vtc.ui.commands.fileMenu">
+            <command
+                  commandId="org.vtc.ui.commands.exit"
+                  label="%org.vtc.ui.commands.exit"
+                  style="push">
+            </command>
+         </menu>
+         <menu
+               id="org.vtc.ui.commands.editMenu"
+               label="%org.vtc.ui.commands.editMenu">
+            <command
+                  commandId="org.vtc.ui.commands.exit"
+                  label="%org.vtc.ui.commands.exit"
+                  style="push">
+            </command>
+         </menu>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:org.eclipse.ui.main.toolbar">
+         <toolbar
+               id="org.vtc.ui.toolbar"
+               label="%org.vtc.ui.toolbar">
+            <command
+                  commandId="org.vtc.ui.toolbar.save"
+                  icon="icons/disk.png"
+                  label="%org.vtc.ui.toolbar.save"
+                  style="push">
+            </command>
+         </toolbar>
+      </menuContribution>
    </extension>
 
 </plugin>
