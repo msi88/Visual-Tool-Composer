@@ -14,9 +14,9 @@
    <extension
          point="org.eclipse.ui.perspectives">
       <perspective
-            name="%perspective.name.vtc"
-            class="org.vtc.perspective.Perspective"
-            id="org.vtc.perspective">
+            name="%org.vtc.ui.common.perspective"
+            class="org.vtc.ui.common.Perspective"
+            id="org.vtc.ui.common.perspective">
       </perspective>
    </extension>
    <extension
@@ -34,43 +34,43 @@
    <extension
          point="org.eclipse.ui.views">
       <view
-            class="org.vtc.perspective.view.ComponentExplorer"
+            class="org.vtc.ui.common.view.ComponentExplorer"
             icon="icons/gear_in.png"
-            id="org.vtc.perspective.view.ComponentExplorer"
-            name="%view.name.componentExplorer"
+            id="org.vtc.ui.common.view.ComponentExplorer"
+            name="%org.vtc.ui.common.view.ComponentExplorer"
             restorable="true">
       </view>
       <view
-            class="org.vtc.perspective.view.Console"
+            class="org.vtc.ui.common.view.Console"
             icon="icons/monitor.png"
-            id="org.vtc.perspective.view.Console"
-            name="%view.name.console"
+            id="org.vtc.ui.common.view.Console"
+            name="%org.vtc.ui.common.view.Console"
             restorable="true">
       </view>
       <view
-            class="org.vtc.perspective.view.ProjectExplorer"
+            class="org.vtc.ui.common.view.ProjectExplorer"
             icon="icons/folders_explorer.png"
-            id="org.vtc.perspective.view.ProjectExplorer"
-            name="%view.name.projectExplorer"
+            id="org.vtc.ui.common.view.ProjectExplorer"
+            name="%org.vtc.ui.common.view.ProjectExplorer"
             restorable="true">
       </view>
       <view
-            class="org.vtc.perspective.view.PropertyEditor"
+            class="org.vtc.ui.common.view.PropertyEditor"
             icon="icons/table_edit.png"
-            id="org.vtc.perspective.view.PropertyEditor"
-            name="%view.name.propertyEditor"
+            id="org.vtc.ui.common.view.PropertyEditor"
+            name="%org.vtc.ui.common.view.PropertyEditor"
             restorable="true">
       </view>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
       <command
-            id="org.vtc.ui.commands.exit"
-            name="%org.vtc.ui.commands.exit">
+            id="org.vtc.ui.common.commands.exit"
+            name="%org.vtc.ui.common.commands.exit">
       </command>
       <command
-            id="org.vtc.ui.toolbar.save"
-            name="%org.vtc.ui.toolbar.save">
+            id="org.vtc.ui.common.commands.save"
+            name="%org.vtc.ui.common.commands.save">
       </command>
    </extension>
    <extension
@@ -79,20 +79,20 @@
             allPopups="false"
             locationURI="menu:org.eclipse.ui.main.menu">
          <menu
-               id="org.vtc.ui.commands.fileMenu"
-               label="%org.vtc.ui.commands.fileMenu">
+               id="org.vtc.ui.common.menu.fileMenu"
+               label="%org.vtc.ui.common.menu.fileMenu">
             <command
-                  commandId="org.vtc.ui.commands.exit"
-                  label="%org.vtc.ui.commands.exit"
+                  commandId="org.vtc.ui.common.commands.exit"
+                  label="%org.vtc.ui.common.commands.exit"
                   style="push">
             </command>
          </menu>
          <menu
-               id="org.vtc.ui.commands.editMenu"
-               label="%org.vtc.ui.commands.editMenu">
+               id="org.vtc.ui.common.menu.editMenu"
+               label="%org.vtc.ui.common.menu.editMenu">
             <command
-                  commandId="org.vtc.ui.commands.exit"
-                  label="%org.vtc.ui.commands.exit"
+                  commandId="org.vtc.ui.common.commands.exit"
+                  label="%org.vtc.ui.common.commands.exit"
                   style="push">
             </command>
          </menu>
@@ -101,12 +101,12 @@
             allPopups="false"
             locationURI="toolbar:org.eclipse.ui.main.toolbar">
          <toolbar
-               id="org.vtc.ui.toolbar"
-               label="%org.vtc.ui.toolbar">
+               id="org.vtc.ui.common.toolbar"
+               label="%org.vtc.ui.common.toolbar">
             <command
-                  commandId="org.vtc.ui.toolbar.save"
+                  commandId="org.vtc.ui.common.commands.save"
                   icon="icons/disk.png"
-                  label="%org.vtc.ui.toolbar.save"
+                  label="%org.vtc.ui.common.commands.save"
                   style="push">
             </command>
          </toolbar>
