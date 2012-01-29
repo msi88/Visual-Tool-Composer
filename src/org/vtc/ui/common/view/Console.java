@@ -71,6 +71,28 @@ public class Console extends ViewPart {
 	}
 
 	/**
+	 * Clear the console window.
+	 */
+	public void clear() {
+		if (_console != null) {
+			_console.setText("");
+		}
+	}
+
+	/**
+	 * Determine wether the console is empty or not.
+	 * 
+	 * @return True if the console is empty and therefore has no text in it
+	 */
+	public boolean isEmpty() {
+		if (_console != null) {
+			return _console.getText().equals("");
+		}
+
+		return true;
+	}
+
+	/**
 	 * The ConsoleStream which prints the console output to the console window.
 	 * 
 	 * @author Michael Sieber

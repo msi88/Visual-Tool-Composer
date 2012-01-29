@@ -34,6 +34,7 @@
    <extension
          point="org.eclipse.ui.views">
       <view
+            allowMultiple="true"
             class="org.vtc.ui.common.view.ComponentExplorer"
             icon="icons/gear_in.png"
             id="org.vtc.ui.common.view.ComponentExplorer"
@@ -41,6 +42,7 @@
             restorable="true">
       </view>
       <view
+            allowMultiple="false"
             class="org.vtc.ui.common.view.Console"
             icon="icons/monitor.png"
             id="org.vtc.ui.common.view.Console"
@@ -48,6 +50,7 @@
             restorable="true">
       </view>
       <view
+            allowMultiple="true"
             class="org.vtc.ui.common.view.ProjectExplorer"
             icon="icons/folders_explorer.png"
             id="org.vtc.ui.common.view.ProjectExplorer"
@@ -55,6 +58,7 @@
             restorable="true">
       </view>
       <view
+            allowMultiple="false"
             class="org.vtc.ui.common.view.PropertyEditor"
             icon="icons/table_edit.png"
             id="org.vtc.ui.common.view.PropertyEditor"
@@ -65,12 +69,18 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
+            defaultHandler="org.vtc.ui.common.commands.ExitHandler"
             id="org.vtc.ui.common.commands.exit"
             name="%org.vtc.ui.common.commands.exit">
       </command>
       <command
             id="org.vtc.ui.common.commands.save"
             name="%org.vtc.ui.common.commands.save">
+      </command>
+      <command
+            defaultHandler="org.vtc.ui.common.commands.ClearConsoleHandler"
+            id="org.vtc.ui.common.commands.clearConsole"
+            name="%org.vtc.ui.common.commands.clearConsole">
       </command>
    </extension>
    <extension
@@ -110,6 +120,16 @@
                   style="push">
             </command>
          </toolbar>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:org.vtc.ui.common.view.Console">
+         <command
+               commandId="org.vtc.ui.common.commands.clearConsole"
+               icon="icons/page_white_delete.png"
+               label="%org.vtc.ui.common.commands.clearConsole"
+               style="push">
+         </command>
       </menuContribution>
    </extension>
 
