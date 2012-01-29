@@ -68,6 +68,7 @@ public class Console extends ViewPart {
 		// configure System.out and System.err
 		System.setOut(outStream);
 		System.setErr(outStream);
+		System.out.println("TEST");
 	}
 
 	/**
