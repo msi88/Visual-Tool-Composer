@@ -46,6 +46,7 @@ public class ClearConsoleHandler extends AbstractHandler {
 		IWorkbenchPage page = window.getActivePage();
 		Console console = (Console) page.findView(_consoleID);
 
+		// clear it
 		if (console != null) {
 			LOGGER.debug("Executing clear console");
 			console.clear();

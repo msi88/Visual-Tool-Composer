@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 
+import org.apache.log4j.Logger;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
@@ -33,7 +34,13 @@ import org.eclipse.ui.part.ViewPart;
  * @author Michael Sieber
  */
 public class Console extends ViewPart {
-	private Text _console;
+	private static final PrintStream OUTSTREAM;
+	private static Text CONSOLE;
+
+	static {
+		OUTSTREAM =
+				new PrintStream(new ConsoleStream(new ByteArrayOutputStream()));
+	}
 
 	/*
 	 * {@inheritDoc}
@@ -41,9 +48,9 @@ public class Console extends ViewPart {
 	@Override
 	public void createPartControl(Composite parent) {
 		// create the console view
-		_console = new Text(parent, SWT.V_SCROLL);
-		_console.setEditable(false);
-		_console.setBackground(parent.getDisplay().getSystemColor(
+		CONSOLE = new Text(parent, SWT.V_SCROLL);
+		CONSOLE.setEditable(false);
+		CONSOLE.setBackground(parent.getDisplay().getSystemColor(
 				SWT.COLOR_WHITE));
 
 		// setup streams
@@ -55,28 +62,27 @@ public class Console extends ViewPart {
 	 */
 	@Override
 	public void setFocus() {
-		_console.setFocus();
+		CONSOLE.setFocus();
 	}
 
 	/**
 	 * Set up the console streams.
 	 */
 	private void setUp() {
-		PrintStream outStream =
-				new PrintStream(new ConsoleStream(new ByteArrayOutputStream()));
 
 		// configure System.out and System.err
-		System.setOut(outStream);
-		System.setErr(outStream);
+		System.setOut(OUTSTREAM);
+		System.setErr(OUTSTREAM);
 		System.out.println("TEST");
+		Logger.getLogger(getClass()).error("TEST1");
 	}
 
 	/**
 	 * Clear the console window.
 	 */
 	public void clear() {
-		if (_console != null) {
-			_console.setText("");
+		if (CONSOLE != null) {
+			CONSOLE.setText("");
 		}
 	}
 
@@ -86,11 +92,20 @@ public class Console extends ViewPart {
 	 * @return True if the console is empty and therefore has no text in it
 	 */
 	public boolean isEmpty() {
-		if (_console != null) {
-			return _console.getText().equals("");
+		if (CONSOLE != null) {
+			return CONSOLE.getText().equals("");
 		}
 
 		return true;
+	}
+
+	/**
+	 * Get the output stream to which all messages will be written.
+	 * 
+	 * @return The print stream for all messages
+	 */
+	public static PrintStream getOutputStream() {
+		return OUTSTREAM;
 	}
 
 	/**
@@ -98,7 +113,7 @@ public class Console extends ViewPart {
 	 * 
 	 * @author Michael Sieber
 	 */
-	private class ConsoleStream extends FilterOutputStream {
+	private static class ConsoleStream extends FilterOutputStream {
 
 		/**
 		 * Create a new ConsoleStream.
@@ -125,7 +140,7 @@ public class Console extends ViewPart {
 
 			// get the string and append it to the console view
 			String out = new String(b, off, len);
-			_console.append(out);
+			CONSOLE.append(out);
 		}
 
 	}
