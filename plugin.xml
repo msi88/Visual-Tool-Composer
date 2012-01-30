@@ -74,13 +74,25 @@
             name="%org.vtc.ui.common.commands.exit">
       </command>
       <command
-            id="org.vtc.ui.common.commands.save"
-            name="%org.vtc.ui.common.commands.save">
-      </command>
-      <command
             defaultHandler="org.vtc.ui.common.commands.ClearConsoleHandler"
             id="org.vtc.ui.common.commands.clearConsole"
             name="%org.vtc.ui.common.commands.clearConsole">
+      </command>
+      <command
+            id="org.vtc.ui.common.commands.newProject"
+            name="%org.vtc.ui.common.commands.newProject">
+      </command>
+      <command
+            id="org.vtc.ui.common.commands.newWorksheet"
+            name="%org.vtc.ui.common.commands.newWorksheet">
+      </command>
+      <command
+            id="org.vtc.ui.common.commands.help"
+            name="%org.vtc.ui.common.commands.help">
+      </command>
+      <command
+            id="org.vtc.ui.common.commands.export"
+            name="%org.vtc.ui.common.commands.export">
       </command>
    </extension>
    <extension
@@ -91,6 +103,52 @@
          <menu
                id="org.vtc.ui.common.menu.fileMenu"
                label="%org.vtc.ui.common.menu.fileMenu">
+            <menu
+                  id="org.vtc.ui.common.menu.newMenu"
+                  label="%org.vtc.ui.common.menu.newMenu">
+               <command
+                     commandId="org.vtc.ui.common.commands.newProject"
+                     icon="icons/application_add.png"
+                     label="%org.vtc.ui.common.commands.newProject"
+                     style="push">
+               </command>
+               <command
+                     commandId="org.vtc.ui.common.commands.newWorksheet"
+                     icon="icons/table_add.png"
+                     label="%org.vtc.ui.common.commands.newWorksheet"
+                     style="push">
+               </command>
+            </menu>
+            <separator
+                  name="org.vtc.ui.common.menu.seperator0"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="org.eclipse.ui.file.save"
+                  icon="icons/disk.png"
+                  label="%org.vtc.ui.common.commands.save"
+                  style="push">
+            </command>
+            <command
+                  commandId="org.eclipse.ui.file.saveAs"
+                  icon="icons/save_as.png"
+                  label="%org.vtc.ui.common.commands.saveAs"
+                  style="push">
+            </command>
+            <separator
+                  name="org.vtc.ui.common.menu.seperator1"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="org.vtc.ui.common.commands.export"
+                  icon="icons/document_export.png"
+                  label="%org.vtc.ui.common.commands.export"
+                  style="push">
+            </command>
+            <separator
+                  name="org.vtc.ui.common.menu.seperator2"
+                  visible="true">
+            </separator>
             <command
                   commandId="org.vtc.ui.common.commands.exit"
                   label="%org.vtc.ui.common.commands.exit"
@@ -101,8 +159,96 @@
                id="org.vtc.ui.common.menu.editMenu"
                label="%org.vtc.ui.common.menu.editMenu">
             <command
-                  commandId="org.vtc.ui.common.commands.exit"
-                  label="%org.vtc.ui.common.commands.exit"
+                  commandId="org.eclipse.ui.edit.undo"
+                  icon="icons/arrow_undo.png"
+                  label="%org.vtc.ui.common.commands.undo"
+                  style="push">
+            </command>
+            <command
+                  commandId="org.eclipse.ui.edit.redo"
+                  icon="icons/arrow_redo.png"
+                  label="%org.vtc.ui.common.commands.redo"
+                  style="push">
+            </command>
+            <separator
+                  name="org.vtc.ui.common.menu.seperator3"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="org.eclipse.ui.edit.cut"
+                  icon="icons/cut.png"
+                  label="%org.vtc.ui.common.commands.cut"
+                  style="push">
+            </command>
+            <command
+                  commandId="org.eclipse.ui.edit.copy"
+                  icon="icons/page_copy.png"
+                  label="%org.vtc.ui.common.commands.copy"
+                  style="push">
+            </command>
+            <command
+                  commandId="org.eclipse.ui.edit.paste"
+                  icon="icons/page_paste.png"
+                  label="%org.vtc.ui.common.commands.paste"
+                  style="push">
+            </command>
+            <separator
+                  name="org.vtc.ui.common.menu.seperator4"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="org.eclipse.ui.edit.delete"
+                  icon="icons/delete.png"
+                  label="%org.vtc.ui.common.commands.delete"
+                  style="push">
+            </command>
+            <command
+                  commandId="org.eclipse.ui.edit.selectAll"
+                  label="%org.vtc.ui.common.commands.selectAll"
+                  style="push">
+            </command>
+            <separator
+                  name="org.vtc.ui.common.menu.seperator5"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="org.eclipse.ui.edit.findReplace"
+                  icon="icons/find.png"
+                  label="%org.vtc.ui.common.commands.findReplace"
+                  style="push">
+            </command>
+         </menu>
+         <menu
+               id="org.vtc.ui.common.menu.windowMenu"
+               label="%org.vtc.ui.common.menu.windowMenu">
+            <command
+                  commandId="org.eclipse.ui.views.showView"
+                  label="%org.vtc.ui.common.commands.showViews"
+                  style="push">
+            </command>
+            <separator
+                  name="org.vtc.ui.common.menu.seperator6"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="org.eclipse.ui.window.preferences"
+                  icon="icons/preferences.png"
+                  label="%org.vtc.ui.common.commands.preferences"
+                  style="push">
+            </command>
+         </menu>
+         <menu
+               id="org.vtc.ui.common.menu.helpMenu"
+               label="%org.vtc.ui.common.menu.helpMenu">
+            <command
+                  commandId="org.eclipse.ui.help.displayHelp"
+                  icon="icons/help.png"
+                  label="%org.vtc.ui.common.commands.help"
+                  style="push">
+            </command>
+            <command
+                  commandId="org.eclipse.ui.help.aboutAction"
+                  label="%org.vtc.ui.common.commands.about"
                   style="push">
             </command>
          </menu>
@@ -114,7 +260,7 @@
                id="org.vtc.ui.common.toolbar"
                label="%org.vtc.ui.common.toolbar">
             <command
-                  commandId="org.vtc.ui.common.commands.save"
+                  commandId="org.eclipse.ui.file.save"
                   icon="icons/disk.png"
                   label="%org.vtc.ui.common.commands.save"
                   style="push">
