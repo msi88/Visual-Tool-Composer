@@ -44,4 +44,10 @@ public @interface Bean {
 	 * {@link Customizer} interface
 	 */
 	public Class<? extends Customizer> customizer() default DefaultCustomizer.class;
+
+	/**
+	 * The group to which this bean should be added. If no group with this name
+	 * exists, a new group will be created.
+	 */
+	public String group() default "";
 }
