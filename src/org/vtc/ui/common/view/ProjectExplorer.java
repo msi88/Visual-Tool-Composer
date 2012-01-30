@@ -16,8 +16,22 @@
  */
 package org.vtc.ui.common.view;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
+
+import org.apache.log4j.Logger;
+import org.eclipse.jface.viewers.IOpenListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.OpenEvent;
+import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
+import org.vtc.Activator;
+import org.vtc.core.model.filebrowser.FileContentProvider;
+import org.vtc.core.model.filebrowser.FileLabelProvider;
+import org.vtc.ui.common.preferences.PreferenceName;
 
 /**
  * The ProjectExplorer which shows all stored projects.
@@ -25,14 +39,61 @@ import org.eclipse.ui.part.ViewPart;
  * @author Michael Sieber
  */
 public class ProjectExplorer extends ViewPart {
+	private static Logger LOGGER = Logger.getLogger(ProjectExplorer.class);
+	private TreeViewer _viewer;
 
 	/*
 	 * {@inheritDoc}
 	 */
 	@Override
 	public void createPartControl(Composite parent) {
-		// TODO Auto-generated method stub
+		_viewer =
+				new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL
+						| SWT.V_SCROLL);
 
+		// get the working directory
+		String workDir =
+				Activator.getDefault().getPreferenceStore()
+						.getString(PreferenceName.WORK_DIR);
+
+		// only show tree if a working dir is defined
+		if (workDir != null && !workDir.equals("")) {
+
+			// get the dir as file
+			File work = new File(workDir);
+
+			if (work != null) {
+
+				// initialize the tree viewer
+				_viewer.setContentProvider(new FileContentProvider());
+				_viewer.setLabelProvider(new FileLabelProvider());
+				_viewer.setInput(work.listFiles());
+
+				// setup listener for tree traversal
+				_viewer.addOpenListener(new IOpenListener() {
+
+					@Override
+					public void open(OpenEvent event) {
+						IStructuredSelection selection =
+								(IStructuredSelection) event
+										.getSelection();
+
+						File file = (File) selection.getFirstElement();
+						if (Desktop.isDesktopSupported()) {
+							Desktop desktop = Desktop.getDesktop();
+							if (desktop.isSupported(Desktop.Action.OPEN)) {
+								try {
+									desktop.open(file);
+								} catch (IOException e) {
+									LOGGER.info("Error opening project tree.",
+											e);
+								}
+							}
+						}
+					}
+				});
+			}
+		}
 	}
 
 	/*
@@ -40,7 +101,8 @@ public class ProjectExplorer extends ViewPart {
 	 */
 	@Override
 	public void setFocus() {
-		// TODO Auto-generated method stub
-
+		if (_viewer != null) {
+			_viewer.getControl().setFocus();
+		}
 	}
 }

@@ -296,5 +296,13 @@
          </command>
       </menuContribution>
    </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="org.vtc.ui.common.preferences.Preferences"
+            id="org.vtc.ui.common.preferences"
+            name="%org.vtc.ui.common.preferences">
+      </page>
+   </extension>
 
 </plugin>
