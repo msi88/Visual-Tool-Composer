@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 
-import org.apache.log4j.Logger;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
@@ -73,8 +72,6 @@ public class Console extends ViewPart {
 		// configure System.out and System.err
 		System.setOut(OUTSTREAM);
 		System.setErr(OUTSTREAM);
-		System.out.println("TEST");
-		Logger.getLogger(getClass()).error("TEST1");
 	}
 
 	/**

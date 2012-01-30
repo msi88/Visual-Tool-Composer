@@ -14,7 +14,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.vtc.ui.common.util;
+package org.vtc.util;
 
 import java.io.IOException;
 import java.io.PrintStream;
