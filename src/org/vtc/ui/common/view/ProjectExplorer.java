@@ -21,6 +21,8 @@ import java.io.File;
 import java.io.IOException;
 
 import org.apache.log4j.Logger;
+import org.eclipse.jface.util.IPropertyChangeListener;
+import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.OpenEvent;
@@ -51,16 +53,37 @@ public class ProjectExplorer extends ViewPart {
 				new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL
 						| SWT.V_SCROLL);
 
-		// get the working directory
+		// get the working directory and update the tree
 		String workDir =
 				Activator.getDefault().getPreferenceStore()
 						.getString(PreferenceName.WORK_DIR);
+		update(workDir);
 
+		// setup the preference change listener for the working directory
+		// property
+		Activator.getDefault().getPreferenceStore()
+				.addPropertyChangeListener(new IPropertyChangeListener() {
+					@Override
+					public void propertyChange(PropertyChangeEvent event) {
+						if (event.getProperty() == PreferenceName.WORK_DIR) {
+							String dir = event.getNewValue().toString();
+							update(dir);
+						}
+					}
+				});
+	}
+
+	/**
+	 * Update the project directory tree.
+	 * 
+	 * @param dir The current directory
+	 */
+	protected void update(String dir) {
 		// only show tree if a working dir is defined
-		if (workDir != null && !workDir.equals("")) {
+		if (dir != null && !dir.equals("")) {
 
 			// get the dir as file
-			File work = new File(workDir);
+			File work = new File(dir);
 
 			if (work != null) {
 
