@@ -265,6 +265,24 @@
                   label="%org.vtc.ui.common.commands.save"
                   style="push">
             </command>
+            <command
+                  commandId="org.eclipse.ui.file.saveAs"
+                  icon="icons/save_as.png"
+                  label="%org.vtc.ui.common.commands.saveAs"
+                  style="push">
+            </command>
+            <command
+                  commandId="org.eclipse.ui.edit.undo"
+                  icon="icons/arrow_undo.png"
+                  label="%org.vtc.ui.common.commands.undo"
+                  style="push">
+            </command>
+            <command
+                  commandId="org.eclipse.ui.edit.redo"
+                  icon="icons/arrow_redo.png"
+                  label="%org.vtc.ui.common.commands.redo"
+                  style="push">
+            </command>
          </toolbar>
       </menuContribution>
       <menuContribution
