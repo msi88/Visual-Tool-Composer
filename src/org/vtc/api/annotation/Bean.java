@@ -47,7 +47,9 @@ public @interface Bean {
 
 	/**
 	 * The group to which this bean should be added. If no group with this name
-	 * exists, a new group will be created.
+	 * exists, a new group will be created. If the group name is empty, the bean
+	 * will be in the default group. The array build a hirarchical group eg. {
+	 * a, b } means that the bean is in group b, which is in group a
 	 */
-	public String group() default "";
+	public String[] group() default "";
 }

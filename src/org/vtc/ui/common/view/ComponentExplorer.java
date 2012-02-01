@@ -18,13 +18,14 @@ package org.vtc.ui.common.view;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
+import org.vtc.ui.common.commands.listeners.Refreshable;
 
 /**
  * The ComponentExplorer shows all available bean components.
  * 
  * @author Michael Sieber
  */
-public class ComponentExplorer extends ViewPart {
+public class ComponentExplorer extends ViewPart implements Refreshable {
 
 	/*
 	 * {@inheritDoc}
@@ -40,6 +41,15 @@ public class ComponentExplorer extends ViewPart {
 	 */
 	@Override
 	public void setFocus() {
+		// TODO Auto-generated method stub
+
+	}
+
+	/*
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void refresh() {
 		// TODO Auto-generated method stub
 
 	}

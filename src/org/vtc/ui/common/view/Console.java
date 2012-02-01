@@ -137,7 +137,10 @@ public class Console extends ViewPart {
 
 			// get the string and append it to the console view
 			String out = new String(b, off, len);
-			CONSOLE.append(out);
+
+			if (CONSOLE != null) {
+				CONSOLE.append(out);
+			}
 		}
 
 	}
