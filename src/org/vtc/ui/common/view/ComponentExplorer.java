@@ -16,8 +16,13 @@
  */
 package org.vtc.ui.common.view;
 
+import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
+import org.vtc.core.model.componentbrowser.BeanModel;
+import org.vtc.core.model.componentbrowser.ComponentContentProvider;
+import org.vtc.core.model.componentbrowser.ComponentLabelProvider;
 import org.vtc.ui.common.commands.listeners.Refreshable;
 
 /**
@@ -26,14 +31,22 @@ import org.vtc.ui.common.commands.listeners.Refreshable;
  * @author Michael Sieber
  */
 public class ComponentExplorer extends ViewPart implements Refreshable {
+	// TODO change dir after testing
+	private final String _dropinDir =
+			"C:\\Users\\Michael\\Documents\\Java\\VisualToolComposer\\dropin";
+	private TreeViewer _viewer;
 
 	/*
 	 * {@inheritDoc}
 	 */
 	@Override
 	public void createPartControl(Composite parent) {
-		// TODO Auto-generated method stub
+		_viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL
+				| SWT.V_SCROLL);
+		refresh();
 
+		// set selection provider
+		getSite().setSelectionProvider(_viewer);
 	}
 
 	/*
@@ -41,8 +54,9 @@ public class ComponentExplorer extends ViewPart implements Refreshable {
 	 */
 	@Override
 	public void setFocus() {
-		// TODO Auto-generated method stub
-
+		if (_viewer != null) {
+			_viewer.getControl().setFocus();
+		}
 	}
 
 	/*
@@ -50,7 +64,10 @@ public class ComponentExplorer extends ViewPart implements Refreshable {
 	 */
 	@Override
 	public void refresh() {
-		// TODO Auto-generated method stub
-
+		if (_viewer != null) {
+			_viewer.setContentProvider(new ComponentContentProvider());
+			_viewer.setLabelProvider(new ComponentLabelProvider());
+			_viewer.setInput(new BeanModel(_dropinDir));
+		}
 	}
 }

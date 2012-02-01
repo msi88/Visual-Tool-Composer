@@ -14,39 +14,37 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.vtc.core.model.filebrowser;
-
-import java.io.File;
+package org.vtc.core.model.componentbrowser;
 
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.vtc.core.model.componentbrowser.util.Bean;
+import org.vtc.core.model.componentbrowser.util.Group;
 
 /**
- * The FileLabelProvider class which provides the labels and names for files.
+ * The ComponentLabelProvider class.
  * 
  * @author Michael Sieber
  */
-public class FileLabelProvider extends LabelProvider {
-	private static final Image FOLDER = AbstractUIPlugin
+public class ComponentLabelProvider extends LabelProvider {
+	private static final Image GROUP = AbstractUIPlugin
 			.imageDescriptorFromPlugin("org.vtc",
 					"icons/folder.png").createImage();
-	private static final Image FILE = AbstractUIPlugin
+	private static final Image BEAN = AbstractUIPlugin
 			.imageDescriptorFromPlugin("org.vtc",
-					"icons/page.png").createImage();
+					"icons/multitool.png").createImage();
 
 	/*
 	 * {@inheritDoc}
 	 */
 	@Override
 	public Image getImage(Object element) {
-		File file = (File) element;
-
-		// check if the file is a directory or not
-		if (file.isDirectory()) {
-			return FOLDER;
+		if (element instanceof Group) {
+			return GROUP;
 		}
-		return FILE;
+
+		return BEAN;
 	}
 
 	/*
@@ -54,12 +52,12 @@ public class FileLabelProvider extends LabelProvider {
 	 */
 	@Override
 	public String getText(Object element) {
-
-		// get the file name
-		String fileName = ((File) element).getName();
-		if (fileName.length() > 0) {
-			return fileName;
+		if (element instanceof Group) {
+			return ((Group) element).getName();
+		} else if (element instanceof Bean) {
+			return ((Bean) element).getName();
 		}
-		return ((File) element).getPath();
+
+		return element.toString();
 	}
 }
