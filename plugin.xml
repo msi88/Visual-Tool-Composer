@@ -308,5 +308,20 @@
             name="%org.vtc.ui.common.preferences">
       </page>
    </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.vtc.ui.common.commands.RefreshHandler"
+            commandId="org.eclipse.ui.file.refresh">
+         <activeWhen>
+            <with
+                  variable="activePart">
+               <instanceof
+                     value="org.vtc.ui.common.commands.listeners.Refreshable">
+               </instanceof>
+            </with>
+         </activeWhen>
+      </handler>
+   </extension>
 
 </plugin>

@@ -33,6 +33,7 @@ import org.eclipse.ui.part.ViewPart;
 import org.vtc.Activator;
 import org.vtc.core.model.filebrowser.FileContentProvider;
 import org.vtc.core.model.filebrowser.FileLabelProvider;
+import org.vtc.ui.common.commands.listeners.Refreshable;
 import org.vtc.ui.common.preferences.PreferenceName;
 
 /**
@@ -40,7 +41,7 @@ import org.vtc.ui.common.preferences.PreferenceName;
  * 
  * @author Michael Sieber
  */
-public class ProjectExplorer extends ViewPart {
+public class ProjectExplorer extends ViewPart implements Refreshable {
 	private static Logger LOGGER = Logger.getLogger(ProjectExplorer.class);
 	private TreeViewer _viewer;
 
@@ -53,11 +54,10 @@ public class ProjectExplorer extends ViewPart {
 				new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL
 						| SWT.V_SCROLL);
 
-		// get the working directory and update the tree
-		String workDir =
-				Activator.getDefault().getPreferenceStore()
-						.getString(PreferenceName.WORK_DIR);
-		update(workDir);
+		refresh();
+
+		// set selection provider
+		getSite().setSelectionProvider(_viewer);
 
 		// setup the preference change listener for the working directory
 		// property
@@ -101,6 +101,7 @@ public class ProjectExplorer extends ViewPart {
 								(IStructuredSelection) event
 										.getSelection();
 
+						// open the file
 						File file = (File) selection.getFirstElement();
 						if (Desktop.isDesktopSupported()) {
 							Desktop desktop = Desktop.getDesktop();
@@ -127,5 +128,18 @@ public class ProjectExplorer extends ViewPart {
 		if (_viewer != null) {
 			_viewer.getControl().setFocus();
 		}
+	}
+
+	/*
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void refresh() {
+		// get the working directory and update the tree
+		String workDir =
+				Activator.getDefault().getPreferenceStore()
+						.getString(PreferenceName.WORK_DIR);
+
+		update(workDir);
 	}
 }
