@@ -20,7 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.vtc.core.model.componentbrowser.util.Group;
+import org.vtc.core.model.componentbrowser.util.Bean;
+import org.vtc.core.model.componentbrowser.util.Nameable;
+import org.vtc.core.util.AnnotationHelper;
 import org.vtc.core.util.ClassUtils;
 
 /**
@@ -43,20 +45,44 @@ public class BeanModel {
 	}
 
 	/**
-	 * Get the group list.
+	 * Get the component content.
 	 * 
-	 * @return A list of groups
+	 * @return A list of components
 	 */
-	public List<Group> getGroups() {
-		List<Group> out = new ArrayList<Group>();
+	public List<Nameable> getComponents() {
+		List<Nameable> out = new ArrayList<Nameable>();
 		try {
 			List<Class<?>> classes = ClassUtils.getClassNamesFromFolder(_dir);
-
-			for (Class<?> clazz : classes) {
-				out.add(new Group(clazz.toString()));
-			}
+			out = createComponentTree(classes);
 		} catch (Exception e) {
 			LOGGER.fatal("Error loading classes from directory: " + _dir, e);
+		}
+
+		return out;
+	}
+
+	/**
+	 * Create the component tree with groups and beans.
+	 * 
+	 * @param classes The list of classes from which the tree will be generated
+	 * @return A list of all beans in hirarchical tree order
+	 */
+	private List<Nameable> createComponentTree(List<Class<?>> classes) {
+		List<Nameable> out = new ArrayList<Nameable>();
+
+		if (classes != null) {
+			for (Class<?> clazz : classes) {
+				for (String group : AnnotationHelper.getGroups(clazz)) {
+
+					// if the bean is in no group add it to root
+					if (group.equals("")) {
+						String name = AnnotationHelper.getBeanName(clazz);
+						out.add(new Bean(name, clazz));
+					}
+				}
+			}
+
+			// TODO implement (recursive?!)
 		}
 
 		return out;

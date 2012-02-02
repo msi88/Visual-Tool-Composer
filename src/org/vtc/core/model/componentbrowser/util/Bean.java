@@ -21,7 +21,7 @@ package org.vtc.core.model.componentbrowser.util;
  * 
  * @author Michael Sieber
  */
-public class Bean {
+public class Bean implements Nameable {
 	private final String _name;
 	private final Class<?> _targetClass;
 
@@ -41,6 +41,7 @@ public class Bean {
 	 * 
 	 * @return The name
 	 */
+	@Override
 	public String getName() {
 		return _name;
 	}

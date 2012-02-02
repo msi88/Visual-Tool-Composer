@@ -66,6 +66,18 @@ public class ConsoleAppender extends AppenderSkeleton {
 
 			// write the message
 			OUT.write(message.getBytes());
+			OUT.flush();
+
+			// print the stack trace
+			if (event.getThrowableStrRep() != null) {
+				StringBuilder error = new StringBuilder();
+				for (String throwable : event.getThrowableStrRep()) {
+					error.append(throwable + "\n");
+				}
+
+				OUT.write(error.toString().getBytes());
+				OUT.flush();
+			}
 		} catch (IOException e) {
 			LOGGER.debug("Unable to write message to output stream.", e);
 		}

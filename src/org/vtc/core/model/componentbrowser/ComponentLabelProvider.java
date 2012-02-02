@@ -19,8 +19,8 @@ package org.vtc.core.model.componentbrowser;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.vtc.core.model.componentbrowser.util.Bean;
 import org.vtc.core.model.componentbrowser.util.Group;
+import org.vtc.core.model.componentbrowser.util.Nameable;
 
 /**
  * The ComponentLabelProvider class.
@@ -52,10 +52,8 @@ public class ComponentLabelProvider extends LabelProvider {
 	 */
 	@Override
 	public String getText(Object element) {
-		if (element instanceof Group) {
-			return ((Group) element).getName();
-		} else if (element instanceof Bean) {
-			return ((Bean) element).getName();
+		if (element instanceof Nameable) {
+			return ((Nameable) element).getName();
 		}
 
 		return element.toString();

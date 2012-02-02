@@ -16,56 +16,17 @@
  */
 package org.vtc.core.model.componentbrowser.util;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * The Group model class.
+ * The Nameable interface for all classes which provide a name.
  * 
  * @author Michael Sieber
  */
-public class Group implements Nameable {
-	private final String _name;
-	private List<Group> _subGroups;
-	private List<Bean> _beans;
+public interface Nameable {
 
 	/**
-	 * Create a new group.
-	 * 
-	 * @param name The group name
-	 */
-	public Group(String name) {
-		_name = name;
-		_subGroups = new ArrayList<Group>();
-		_beans = new ArrayList<Bean>();
-	}
-
-	/**
-	 * Get the group name.
+	 * Get the name.
 	 * 
 	 * @return The name
 	 */
-	@Override
-	public String getName() {
-		return _name;
-	}
-
-	/**
-	 * Get a list with all sub groups.
-	 * 
-	 * @return The subGroups
-	 */
-	public List<Group> getSubGroups() {
-		return _subGroups;
-	}
-
-	/**
-	 * Get a list with all beans.
-	 * 
-	 * @return The beans
-	 */
-	public List<Bean> getBeans() {
-		return _beans;
-	}
-
+	public String getName();
 }

@@ -47,7 +47,7 @@ public class Console extends ViewPart {
 	@Override
 	public void createPartControl(Composite parent) {
 		// create the console view
-		CONSOLE = new Text(parent, SWT.V_SCROLL);
+		CONSOLE = new Text(parent, SWT.V_SCROLL | SWT.H_SCROLL);
 		CONSOLE.setEditable(false);
 		CONSOLE.setBackground(parent.getDisplay().getSystemColor(
 				SWT.COLOR_WHITE));

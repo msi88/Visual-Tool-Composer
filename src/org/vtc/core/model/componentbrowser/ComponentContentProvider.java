@@ -49,7 +49,7 @@ public class ComponentContentProvider implements ITreeContentProvider {
 	 */
 	@Override
 	public Object[] getElements(Object inputElement) {
-		return _model.getGroups().toArray();
+		return _model.getComponents().toArray();
 	}
 
 	/*

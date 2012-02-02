@@ -17,6 +17,7 @@
 package org.vtc.core.util;
 
 import org.apache.log4j.Logger;
+import org.vtc.api.annotation.Bean;
 
 /**
  * The AnnotationHelper class which provides functions for annotation
@@ -34,5 +35,35 @@ public class AnnotationHelper {
 		// nothing to do here
 	}
 
-	// TODO implement
+	/**
+	 * Get the name for a bean.
+	 * 
+	 * @param bean The bean class from which the name should be generated
+	 * @return The name of the bean
+	 */
+	public static String getBeanName(Class<?> bean) {
+		LOGGER.debug("Loading name for " + bean);
+
+		// check if the class is annotated with the bean annotation
+		if (bean.isAnnotationPresent(Bean.class)
+				&& !bean.getAnnotation(Bean.class).name().equals("")) {
+			return bean.getAnnotation(Bean.class).name();
+		}
+
+		return ClassUtils.getClassName(bean);
+	}
+
+	/**
+	 * Get the group names for a bean.
+	 * 
+	 * @param bean The bean class from which the groups should be loaded
+	 * @return A list of groups for this bean
+	 */
+	public static String[] getGroups(Class<?> bean) {
+		if (bean.isAnnotationPresent(Bean.class)) {
+			return bean.getAnnotation(Bean.class).group();
+		}
+
+		return new String[] { "" };
+	}
 }
