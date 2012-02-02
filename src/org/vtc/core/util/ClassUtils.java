@@ -103,7 +103,9 @@ public final class ClassUtils {
 							new URL("file:///" + rootFolder + "/");
 					URLClassLoader loader =
 							new URLClassLoader(
-									new URL[] { folder });
+									new URL[] { folder }, Thread
+											.currentThread()
+											.getContextClassLoader());
 
 					// get the full class name
 					String entryName = file.toString();
@@ -138,7 +140,8 @@ public final class ClassUtils {
 		// load the jar
 		JarFile file = new JarFile(jar);
 		URLClassLoader loader =
-				new URLClassLoader(new URL[] { jar.toURI().toURL() });
+				new URLClassLoader(new URL[] { jar.toURI().toURL() }, Thread
+						.currentThread().getContextClassLoader());
 
 		// loop through all jar file entries
 		Enumeration<JarEntry> entries = file.entries();
