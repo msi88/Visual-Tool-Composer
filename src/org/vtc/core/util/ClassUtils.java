@@ -3,6 +3,8 @@ package org.vtc.core.util;
 import java.io.File;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -97,13 +99,22 @@ public final class ClassUtils {
 				} else if (hasExtension(file.getName(), ".jar")) {
 					out.addAll(getClassNamesFromJAR(file));
 				} else {
+					URL folder =
+							new URL("file:///" + rootFolder + "/");
+					URLClassLoader loader =
+							new URLClassLoader(
+									new URL[] { folder });
+
+					// get the full class name
 					String entryName = file.toString();
 					entryName =
 							entryName.substring(0, entryName.lastIndexOf('.'));
 					entryName =
 							entryName.replace(rootFolder + "\\", "")
 									.replace("\\", ".");
-					out.add(Class.forName(entryName));
+
+					// load the class
+					out.add(loader.loadClass(entryName));
 					LOGGER.debug("Class " + entryName + " added.");
 				}
 			}
@@ -123,7 +134,11 @@ public final class ClassUtils {
 	public static List<Class<?>> getClassNamesFromJAR(File jar)
 			throws IOException, ClassNotFoundException {
 		List<Class<?>> out = new ArrayList<Class<?>>();
+
+		// load the jar
 		JarFile file = new JarFile(jar);
+		URLClassLoader loader =
+				new URLClassLoader(new URL[] { jar.toURI().toURL() });
 
 		// loop through all jar file entries
 		Enumeration<JarEntry> entries = file.entries();
@@ -134,7 +149,7 @@ public final class ClassUtils {
 			if (hasExtension(entry.toString(), ".class")) {
 				String fullClassName = entry.toString().replace("/", ".");
 				fullClassName = fullClassName.replace(".class", "");
-				out.add(Class.forName(fullClassName));
+				out.add(loader.loadClass(fullClassName));
 				LOGGER.debug("Class " + fullClassName + " added.");
 			}
 		}
