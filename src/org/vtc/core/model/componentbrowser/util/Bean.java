@@ -55,4 +55,28 @@ public class Bean implements Nameable {
 		return _targetClass;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Bean) {
+			Bean b = (Bean) obj;
+			if (b.getName().equals(getName())
+					&& b.getTargetClass().equals(getTargetClass())) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int hashCode() {
+		return _name.hashCode() * _targetClass.hashCode();
+	}
+
 }

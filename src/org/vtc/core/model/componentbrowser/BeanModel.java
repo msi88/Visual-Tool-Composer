@@ -122,7 +122,9 @@ public class BeanModel {
 			curr.getContent().add(g);
 			addToGroup(g, groups, ++index, toAdd);
 		} else {
-			curr.getContent().add(toAdd);
+			if (!curr.getContent().contains(toAdd)) {
+				curr.getContent().add(toAdd);
+			}
 		}
 	}
 }
