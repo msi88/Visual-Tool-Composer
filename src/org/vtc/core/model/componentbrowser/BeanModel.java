@@ -52,7 +52,9 @@ public class BeanModel {
 	public List<Nameable> getComponents() {
 		List<Nameable> out = new ArrayList<Nameable>();
 		try {
-			List<Class<?>> classes = ClassUtils.getClassNamesFromFolder(_dir);
+			List<Class<?>> classes =
+					ClassUtils.getClassesWithAnnotation(_dir,
+							org.vtc.api.annotation.Bean.class);
 			out = createComponentTree(classes);
 		} catch (Exception e) {
 			LOGGER.fatal("Error loading classes from directory: " + _dir, e);
