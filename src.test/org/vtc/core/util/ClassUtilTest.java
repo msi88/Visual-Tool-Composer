@@ -66,7 +66,7 @@ public class ClassUtilTest {
 			ClassNotFoundException {
 		List<Class<?>> out =
 				ClassUtils
-						.getClassNamesFromFolder("dropin");
+						.getClassNamesFromFolder("dropin", null);
 		Assert.assertTrue(out.size() > 0);
 	}
 }
