@@ -51,7 +51,6 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 		super.initialize(configurer);
 
 		// save user layout
-		// TODO activate
-		// configurer.setSaveAndRestore(true);
+		configurer.setSaveAndRestore(true);
 	}
 }
