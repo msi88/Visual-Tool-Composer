@@ -57,7 +57,7 @@ public class ComponentContentProvider implements ITreeContentProvider {
 	 */
 	@Override
 	public Object[] getChildren(Object parentElement) {
-		return ((Group) parentElement).getSubGroups().toArray();
+		return ((Group) parentElement).getContent().toArray();
 	}
 
 	/*

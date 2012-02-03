@@ -21,6 +21,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.vtc.core.model.componentbrowser.util.Bean;
+import org.vtc.core.model.componentbrowser.util.Group;
 import org.vtc.core.model.componentbrowser.util.Nameable;
 import org.vtc.core.util.AnnotationHelper;
 import org.vtc.core.util.ClassUtils;
@@ -70,23 +71,49 @@ public class BeanModel {
 	 * @return A list of all beans in hirarchical tree order
 	 */
 	private List<Nameable> createComponentTree(List<Class<?>> classes) {
-		List<Nameable> out = new ArrayList<Nameable>();
+		Group root = new Group("root");
 
 		if (classes != null) {
 			for (Class<?> clazz : classes) {
-				for (String group : AnnotationHelper.getGroups(clazz)) {
+				String[] groups = AnnotationHelper.getGroups(clazz);
 
-					// if the bean is in no group add it to root
-					if (group.equals("")) {
-						String name = AnnotationHelper.getBeanName(clazz);
-						out.add(new Bean(name, clazz));
-					}
+				// if the bean is in no group add it to root
+				if (groups[0].equals("")) {
+					String name = AnnotationHelper.getBeanName(clazz);
+					root.getContent().add(new Bean(name, clazz));
+				} else {
+					Bean toAdd =
+							new Bean(AnnotationHelper.getBeanName(clazz),
+									clazz);
+					addToGroup(root, groups, 0, toAdd);
+				}
+			}
+		}
+
+		return root.getContent();
+	}
+
+	private void addToGroup(Group curr, String[] groups,
+			int index, Bean toAdd) {
+		if (index < groups.length) {
+			String group = groups[index];
+
+			for (Nameable nameable : curr.getContent()) {
+				if (nameable instanceof Group
+						&& nameable.getName().equals(group)) {
+					Group tmp = (Group) nameable;
+					addToGroup(tmp, groups,
+							++index, toAdd);
+					return;
 				}
 			}
 
-			// TODO implement (recursive?!)
+			// no group name found, create it
+			Group g = new Group(group);
+			curr.getContent().add(g);
+			addToGroup(g, groups, ++index, toAdd);
+		} else {
+			curr.getContent().add(toAdd);
 		}
-
-		return out;
 	}
 }

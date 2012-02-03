@@ -26,8 +26,7 @@ import java.util.List;
  */
 public class Group implements Nameable {
 	private final String _name;
-	private List<Group> _subGroups;
-	private List<Bean> _beans;
+	private List<Nameable> _content;
 
 	/**
 	 * Create a new group.
@@ -36,8 +35,7 @@ public class Group implements Nameable {
 	 */
 	public Group(String name) {
 		_name = name;
-		_subGroups = new ArrayList<Group>();
-		_beans = new ArrayList<Bean>();
+		_content = new ArrayList<Nameable>();
 	}
 
 	/**
@@ -51,21 +49,12 @@ public class Group implements Nameable {
 	}
 
 	/**
-	 * Get a list with all sub groups.
+	 * Get a list with all sub items.
 	 * 
 	 * @return The subGroups
 	 */
-	public List<Group> getSubGroups() {
-		return _subGroups;
-	}
-
-	/**
-	 * Get a list with all beans.
-	 * 
-	 * @return The beans
-	 */
-	public List<Bean> getBeans() {
-		return _beans;
+	public List<Nameable> getContent() {
+		return _content;
 	}
 
 }
