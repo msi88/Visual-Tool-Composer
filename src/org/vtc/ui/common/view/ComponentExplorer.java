@@ -31,9 +31,7 @@ import org.vtc.ui.common.commands.listeners.Refreshable;
  * @author Michael Sieber
  */
 public class ComponentExplorer extends ViewPart implements Refreshable {
-	// FIXME change dir after testing
-	private final String _dropinDir =
-			"C:\\Users\\Michael\\Documents\\Java\\VisualToolComposer\\dropin";
+	private final String _dropinDir = "dropin";
 	private TreeViewer _viewer;
 
 	/*
