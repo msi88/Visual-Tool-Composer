@@ -323,5 +323,15 @@
          </activeWhen>
       </handler>
    </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="org.vtc.ui.common.editor.VTCEditor"
+            default="true"
+            extensions="&quot;xml&quot;"
+            id="org.vtc.ui.common.editor.VTCEditor"
+            name="%org.vtc.ui.common.editor.VTCEditor">
+      </editor>
+   </extension>
 
 </plugin>

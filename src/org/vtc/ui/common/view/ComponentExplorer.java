@@ -16,6 +16,9 @@
  */
 package org.vtc.ui.common.view;
 
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -41,6 +44,23 @@ public class ComponentExplorer extends ViewPart implements Refreshable {
 	public void createPartControl(Composite parent) {
 		_viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL
 				| SWT.V_SCROLL);
+
+		// listener for expanding an element on double click
+		_viewer.addDoubleClickListener(new IDoubleClickListener() {
+
+			@Override
+			public void doubleClick(DoubleClickEvent event) {
+				IStructuredSelection s =
+						(IStructuredSelection) event.getSelection();
+				Object element = s.getFirstElement();
+				if (_viewer.isExpandable(element)) {
+					_viewer.setExpandedState(element,
+							!_viewer.getExpandedState(element));
+				}
+
+			}
+		});
+
 		refresh();
 
 		// set selection provider

@@ -16,21 +16,26 @@
  */
 package org.vtc.ui.common.view;
 
-import java.awt.Desktop;
 import java.io.File;
-import java.io.IOException;
+import java.util.Iterator;
 
 import org.apache.log4j.Logger;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.vtc.Activator;
+import org.vtc.core.model.editor.EditorInput;
 import org.vtc.core.model.filebrowser.FileContentProvider;
 import org.vtc.core.model.filebrowser.FileLabelProvider;
 import org.vtc.ui.common.commands.listeners.Refreshable;
@@ -55,6 +60,56 @@ public class ProjectExplorer extends ViewPart implements Refreshable {
 						| SWT.V_SCROLL);
 
 		refresh();
+
+		// listener for expanding an element on double click
+		_viewer.addDoubleClickListener(new IDoubleClickListener() {
+
+			@Override
+			public void doubleClick(DoubleClickEvent event) {
+				IStructuredSelection s =
+						(IStructuredSelection) event.getSelection();
+				Object element = s.getFirstElement();
+				if (_viewer.isExpandable(element)) {
+					_viewer.setExpandedState(element,
+							!_viewer.getExpandedState(element));
+				}
+
+			}
+		});
+
+		// setup listener for tree traversal
+		_viewer.addOpenListener(new IOpenListener() {
+
+			@Override
+			public void open(OpenEvent event) {
+				IStructuredSelection selection =
+						(IStructuredSelection) event
+								.getSelection();
+
+				// open all selected files
+				Iterator<?> it = selection.iterator();
+				while (it.hasNext()) {
+					Object tmp = it.next();
+					if (tmp instanceof File) {
+						File file = (File) tmp;
+
+						// only open files, not directories
+						if (!file.isDirectory()) {
+							IWorkbenchPage page =
+									PlatformUI.getWorkbench()
+											.getActiveWorkbenchWindow()
+											.getActivePage();
+							try {
+								page.openEditor(new EditorInput(file),
+										"org.vtc.ui.common.editor.VTCEditor");
+							} catch (PartInitException e) {
+								LOGGER.error("Unable to open file.", e);
+							}
+						}
+					}
+				}
+			}
+		});
 
 		// set selection provider
 		getSite().setSelectionProvider(_viewer);
@@ -91,31 +146,6 @@ public class ProjectExplorer extends ViewPart implements Refreshable {
 				_viewer.setContentProvider(new FileContentProvider());
 				_viewer.setLabelProvider(new FileLabelProvider());
 				_viewer.setInput(work.listFiles());
-
-				// setup listener for tree traversal
-				_viewer.addOpenListener(new IOpenListener() {
-
-					@Override
-					public void open(OpenEvent event) {
-						IStructuredSelection selection =
-								(IStructuredSelection) event
-										.getSelection();
-
-						// open the file
-						File file = (File) selection.getFirstElement();
-						if (Desktop.isDesktopSupported()) {
-							Desktop desktop = Desktop.getDesktop();
-							if (desktop.isSupported(Desktop.Action.OPEN)) {
-								try {
-									desktop.open(file);
-								} catch (IOException e) {
-									LOGGER.info("Error opening project tree.",
-											e);
-								}
-							}
-						}
-					}
-				});
 			}
 		}
 	}
