@@ -93,6 +93,15 @@ public class BeanModel {
 		return root.getContent();
 	}
 
+	/**
+	 * Add a bean to a group or subgroup.
+	 * 
+	 * @param curr The current group
+	 * @param groups The list of groups in which the bean should be added
+	 * @param index The group index. Determines which group is currently
+	 *            processed
+	 * @param toAdd The bean which should be added to a group
+	 */
 	private void addToGroup(Group curr, String[] groups,
 			int index, Bean toAdd) {
 		if (index < groups.length) {
