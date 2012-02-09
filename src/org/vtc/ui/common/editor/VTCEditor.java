@@ -72,8 +72,7 @@ public class VTCEditor extends MultiPageEditorPart {
 	 */
 	@Override
 	public boolean isDirty() {
-		// TODO Auto-generated method stub
-		return false;
+		return _isDirty;
 	}
 
 	/**
